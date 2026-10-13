@@ -1,0 +1,383 @@
+/* --- CSS変数（テーマ定義） --- */
+:root {
+  --primary-color: #b8860b;
+  --primary-hover: #996515;
+  --bg-color: #f5efe6;
+  --card-bg: #ffffff;
+  --text-color: #4a3f35;
+  --sub-text-color: #8c7a6b;
+  --border-color: #e6dac8;
+  --input-bg: #ffffff;
+}
+
+/* デフォルト：ベージュテーマ */
+body.theme-beige {
+  --primary-color: #b8860b;
+  --primary-hover: #996515;
+  --bg-color: #f5efe6;
+  --card-bg: #ffffff;
+  --text-color: #4a3f35;
+  --sub-text-color: #8c7a6b;
+  --border-color: #e6dac8;
+  --input-bg: #ffffff;
+}
+
+body.theme-blue {
+  --primary-color: #4a90e2;
+  --primary-hover: #357abd;
+  --bg-color: #f0f4f8;
+  --card-bg: #ffffff;
+  --text-color: #333333;
+  --sub-text-color: #666666;
+  --border-color: #e0e0e0;
+  --input-bg: #ffffff;
+}
+
+body.theme-green {
+  --primary-color: #2ecc71;
+  --primary-hover: #27ae60;
+  --bg-color: #eef9f2;
+  --card-bg: #ffffff;
+  --text-color: #2c3e50;
+  --sub-text-color: #7f8c8d;
+  --border-color: #d5f5e3;
+  --input-bg: #ffffff;
+}
+
+body.theme-pink {
+  --primary-color: #ff6b81;
+  --primary-hover: #ee5253;
+  --bg-color: #fff0f3;
+  --card-bg: #ffffff;
+  --text-color: #2d3436;
+  --sub-text-color: #636e72;
+  --border-color: #ffdae0;
+  --input-bg: #ffffff;
+}
+
+body.theme-dark {
+  --primary-color: #6c5ce7;
+  --primary-hover: #5a4bcf;
+  --bg-color: #181824;
+  --card-bg: #222232;
+  --text-color: #f1f1f1;
+  --sub-text-color: #a0a0b0;
+  --border-color: #323248;
+  --input-bg: #2b2b3d;
+}
+
+/* --- 基本レイアウト --- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg-color) !important;
+  color: var(--text-color);
+  margin: 0;
+  padding: 16px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.screen {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ヘッダー */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--sub-text-color);
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+/* カードデザイン */
+.card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s;
+}
+
+.date-card {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.flex-container {
+  display: flex;
+  gap: 12px;
+}
+
+.half-card {
+  flex: 1;
+}
+
+h1 {
+  font-size: 22px;
+  text-align: center;
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 4px;
+}
+
+/* ボタン */
+.main-button {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: background-color 0.2s;
+}
+
+.main-button:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-primary {
+  padding: 8px 14px;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 12px;
+  background-color: var(--sub-text-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  width: 100%;
+  padding: 12px;
+  background-color: #d9534f;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-setup-fix {
+  display: block !important;
+  width: 100% !important;
+  padding: 12px !important;
+  margin-top: 12px !important;
+  margin-bottom: 24px !important;
+  background-color: var(--sub-text-color) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  text-align: center !important;
+}
+
+/* フォーム要素 */
+input[type="text"], input[type="date"], select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.inline-input-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+/* リスト・チェックリスト */
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.checklist li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.checklist label.checked {
+  text-decoration: line-through;
+  color: var(--sub-text-color);
+}
+
+.schedule-item {
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.classroom-badge {
+  font-size: 12px;
+  background-color: var(--border-color);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 4px;
+}
+
+.club-badge-box {
+  margin-top: 8px;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.setting-box {
+  background-color: var(--card-bg);
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+.period-row {
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.period-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+/* 教室名・場所の入力欄（コンパクト化） */
+.classroom-input {
+  width: 110px !important;
+  padding: 4px 8px !important;
+  font-size: 13px !important;
+  text-align: center;
+}
+
+.item-input-group {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.remove-item-btn {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.add-item-input-btn {
+  margin-top: 6px;
+  background: none;
+  border: 1px dashed var(--primary-color);
+  color: var(--primary-color);
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.custom-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.custom-tag {
+  background-color: var(--border-color);
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.custom-tag button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--sub-text-color);
+}
+
+/* テーマピッカーボタン */
+.theme-picker {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.theme-btn {
+  flex: 1;
+  min-width: 60px;
+  padding: 8px 4px;
+  border: none;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.theme-beige-btn { background-color: #b8860b; }
+.theme-blue-btn { background-color: #4a90e2; }
+.theme-green-btn { background-color: #2ecc71; }
+.theme-pink-btn { background-color: #ff6b81; }
+.theme-dark-btn { background-color: #6c5ce7; }
