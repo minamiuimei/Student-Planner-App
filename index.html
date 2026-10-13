@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学生の予定管理アプリ</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-beige">
+
+<!-- 今日画面 -->
+<div class="screen" id="todayScreen">
+  <div class="app-header">
+    <h1 style="margin: 0;">学生の予定管理アプリ</h1>
+  </div>
+  <p class="subtitle">今日も一日がんばりましょう！</p>
+
+  <div class="card date-card" id="todayDate">----年--月--日</div>
+
+  <!-- カウントダウン -->
+  <div class="card countdown-card">
+    <div class="countdown-header">
+      <h2>⏳ カウントダウン</h2>
+      <button class="btn-sm" id="editCountdownBtn">編集</button>
+    </div>
+    <div id="countdownDisplay" class="countdown-body">目標を設定してください</div>
+    <div id="countdownForm" class="hidden" style="margin-top: 10px;">
+      <div class="inline-input-group">
+        <input type="text" id="targetTitle" placeholder="例: 定期テスト">
+        <input type="date" id="targetDate">
+      </div>
+      <button class="main-button" id="saveTargetBtn" style="padding: 6px; font-size: 14px;">保存</button>
+    </div>
+  </div>
+
+  <!-- 曜日切替 -->
+  <div class="card swap-card">
+    <span>🔄 表示曜日の切り替え:</span>
+    <select id="daySwapSelect">
+      <option value="auto">自動（今日）</option>
+      <option value="1">月曜日</option>
+      <option value="2">火曜日</option>
+      <option value="3">水曜日</option>
+      <option value="4">木曜日</option>
+      <option value="5">金曜日</option>
+    </select>
+  </div>
+
+  <div class="flex-container">
+    <!-- 今日の時間割 -->
+    <div class="card half-card">
+      <h2>📚 今日の時間割</h2>
+      <div id="todaySchedule"></div>
+      <div id="todayClub" class="club-badge-box"></div>
+    </div>
+
+    <!-- 今日の持ち物 -->
+    <div class="card half-card highlight-box-green">
+      <h2>🎒 今日の持ち物</h2>
+      <div id="todayItems"></div>
+    </div>
+  </div>
+
+  <!-- 明日の持ち物予習 -->
+  <div class="card highlight-box">
+    <h2>👀 明日の持ち物（プレビュー）</h2>
+    <div id="tomorrowItems"></div>
+  </div>
+
+  <!-- 天気予報 -->
+  <div class="card weather-card">
+    <h2>🌤 天気予報</h2>
+    <div id="weatherList" class="weather-display"></div>
+  </div>
+
+  <!-- メモ -->
+  <div class="card">
+    <h2>📝 メモ帳</h2>
+    <textarea id="memo" placeholder="自由にメモを入力..."></textarea>
+    <button class="btn-primary" id="saveMemoBtn" style="margin-top: 6px; width: 100%;">メモを保存</button>
+  </div>
+
+  <button class="main-button" id="tomorrowBtn">▶ 明日の準備画面へ</button>
+  <button class="btn-setup-fix" id="editSetupBtn">⚙ 時間割・設定の編集</button>
+</div>
+
+<!-- 明日画面 -->
+<div class="screen hidden" id="tomorrowScreen">
+  <h1>明日の準備</h1>
+  <div class="card date-card" id="tomorrowDate">----年--月--日</div>
+
+  <div class="flex-container">
+    <div class="card half-card">
+      <h2>📚 明日の時間割</h2>
+      <div id="tomorrowSchedule"></div>
+      <div id="tomorrowClub" class="club-badge-box"></div>
+    </div>
+
+    <div class="card half-card highlight-box-green">
+      <h2>🎒 明日の持ち物</h2>
+      <div id="tomorrowPageItems"></div>
+    </div>
+  </div>
+
+  <button class="main-button" id="todayBtn">◀ 今日画面に戻る</button>
+</div>
+
+<!-- 設定画面 -->
+<div class="screen hidden" id="setupScreen">
+  <h1>⚙ 時間割・初期設定</h1>
+
+  <!-- テーマカラー設定 -->
+  <div class="setting-box">
+    <h2>🎨 アプリのテーマカラー</h2>
+    <p style="font-size: 12px; color: var(--sub-text-color);">お好みのテーマカラーを選択してください。</p>
+    <div class="theme-picker">
+      <button type="button" class="theme-btn theme-beige-btn" onclick="changeTheme('beige')">ベージュ</button>
+      <button type="button" class="theme-btn theme-blue-btn" onclick="changeTheme('blue')">ブルー</button>
+      <button type="button" class="theme-btn theme-green-btn" onclick="changeTheme('green')">グリーン</button>
+      <button type="button" class="theme-btn theme-pink-btn" onclick="changeTheme('pink')">ピンク</button>
+      <button type="button" class="theme-btn theme-dark-btn" onclick="changeTheme('dark')">ダーク</button>
+    </div>
+  </div>
+
+  <!-- 共通持ち物一括追加 -->
+  <div class="setting-box">
+    <h2>🎁 全授業に共通で持ち物を追加</h2>
+    <div class="inline-input-group">
+      <input type="text" id="commonItemInput" placeholder="例: 筆記用具">
+      <button class="btn-primary" id="applyCommonItemBtn">全追加</button>
+    </div>
+  </div>
+
+  <!-- 曜日ごとの時間割設定エリア -->
+  <div id="scheduleSetupArea"></div>
+
+  <!-- 週末部活 -->
+  <div class="setting-box">
+    <h2>🏃 週末の部活動</h2>
+    <label><input type="checkbox" id="saturdayClub"> 土曜日 部活あり</label><br>
+    <label><input type="checkbox" id="sundayClub"> 日曜日 部活あり</label>
+  </div>
+
+  <!-- 天気予報の地域設定（一般化） -->
+  <div class="setting-box">
+    <h2>🌤 天気予報の表示地域</h2>
+    <input type="text" class="weather-input" id="weatherPlace1" placeholder="地域1 (例: 東京都)">
+    <input type="text" class="weather-input" id="weatherPlace2" placeholder="地域2 (例: 大阪市)">
+    <input type="text" class="weather-input" id="weatherPlace3" placeholder="地域3 (例: 名古屋市)">
+  </div>
+
+  <!-- 置き勉リスト設定 -->
+  <div class="setting-box">
+    <h2>🏫 置き勉（学校に置いておくもの）</h2>
+    <p style="font-size: 12px; color: var(--sub-text-color);">チェックを入れた項目は持ち物リストから自動除外されます。</p>
+    <ul id="okibenSetupList" class="checklist"></ul>
+  </div>
+
+  <!-- カスタム教科・持ち物の追加 -->
+  <div class="setting-box">
+    <h2>➕ 教科・持ち物のカスタマイズ</h2>
+    <div class="inline-input-group">
+      <input type="text" id="newSubjectInput" placeholder="追加する教科名">
+      <button class="btn-primary" id="addSubjectBtn">追加</button>
+    </div>
+    <div id="customSubjectList" class="custom-list"></div>
+
+    <div class="inline-input-group" style="margin-top: 10px;">
+      <input type="text" id="newItemInput" placeholder="追加する持ち物名">
+      <button class="btn-primary" id="addItemBtn">追加</button>
+    </div>
+    <div id="customItemList" class="custom-list"></div>
+  </div>
+
+  <button class="main-button" id="saveSetupBtn">💾 設定を保存して戻る</button>
+  <button class="btn-danger" id="resetAllBtn" style="margin-top: 10px;">⚠️ データを全初期化</button>
+</div>
+
+<!-- データリスト候補 -->
+<datalist id="subject-list"></datalist>
+<datalist id="item-list"></datalist>
+
+<script src="script.js"></script>
+</body>
+</html>
